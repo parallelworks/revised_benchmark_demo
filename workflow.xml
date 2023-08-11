@@ -1,0 +1,36 @@
+<tool id='Matt.Long_interactive_session' name='Matt.Long_interactive_session'>
+  <command interpreter='bash'>workflow.sh</command>
+  <inputs>
+    <section name='commands' type='section' conditional='[object Object],[object Object]' title='Commands' expanded='true'>
+      <param name='nnodes'
+             label='Number of nodes'
+             type='text'
+             value='10'
+             help='Number of nodes for job'
+             width='50%_none'>
+      </param>
+      <param name='ppn'
+             label='Tasks per node'
+             type='text'
+             value='2'
+             help='Number of mpi tasks to run per node'
+             width='50%_none'>
+      </param>
+      <param name='resource_1' 
+             type='computeResource' 
+             label='Resource' 
+             help='Select a resource to run the workflow on'
+      ></param>
+      <param name='jsource' 
+             type='select' 
+             label='Select benchmark' 
+             help='Select which built-in benchmark to run.' 
+             multiple='false'>
+                <option value="standard" selected="true">Standard</option>
+                <option value="minimal">Minimal</option>
+      </param>
+    </section>
+  </inputs>
+  <outputs>
+  </outputs>
+</tool>
