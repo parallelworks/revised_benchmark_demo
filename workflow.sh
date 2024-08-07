@@ -74,7 +74,7 @@ echo "git clone -c feature.manyFiles=true https://github.com/spack/spack.git" > 
 echo ". $HOME/spack/share/spack/setup-env.sh" >> ${jobdir}/wfenv.sh 
 echo "spack install intel-oneapi-mpi intel-oneapi-compilers" >> ${jobdir}/wfenv.sh
 echo "source /usr/share/lmod/8.7.32/init/bash" >> ${jobdir}/wfenv.sh 
-echo "yes | spack module lmod refresh intel-oneapi-mpi intel-oneapi-compilers" >> ${jobdir}/wfenv.sh
+echo "yes | spack module lmod refresh intel-oneapi-mpi intel-oneapi-compilers gcc-runtime glibc" >> ${jobdir}/wfenv.sh
 echo "export MODULEPATH=\$MODULEPATH:$HOME/spack/share/spack/lmod/linux-rocky8-x86_64/Core" >> ${jobdir}/wfenv.sh
 echo "echo \$MODULEPATH" >> ${jobdir}/wfenv.sh
 echo "module load \$(module avail 2>&1 | grep "intel-oneapi-compilers")" >> ${jobdir}/wfenv.sh
