@@ -81,6 +81,7 @@ echo "module load \$(module avail 2>&1 | grep "intel-oneapi-compilers")" >> ${jo
 echo "module load \$(module avail 2>&1 | grep "intel-oneapi-mpi")" >> ${jobdir}/wfenv.sh
 
 scp ${jobdir}/wfenv.sh ${WFP_whost}:${HOME}
+scp ${jobdir}/inputs.sh ${WFP_whost}:${HOME}
 
 echo "submitting batch job..."
 jobid=$(${sshcmd} "sbatch -o ${HOME}/slurm_job_%j.out -e /${HOME}/slurm_job_%j.out -N ${commands_nnodes} --ntasks-per-node=${commands_ppn} ${WFP_jobscript};echo Runcmd done2 >> ~/job.exit" | tail -1 | awk -F ' ' '{print $4}')
