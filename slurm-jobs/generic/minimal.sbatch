@@ -23,25 +23,25 @@ git clone https://github.com/hpc/ior.git
 # build ior
 cd ior
 ./bootstrap
-./configure --with-lustre
+./configure
 make clean && make
 
 # test build
 mpirun ./src/ior
 
 # run dir setup
-mkdir -p $HOME/lustre/bench/ior/bin_$SLURM_JOBID $HOME/lustre/bench/ior/run_$SLURM_JOBID
-mkdir -p $HOME/lustre/bench/mdtest/bin_$SLURM_JOBID $HOME/lustre/bench/mdtest/run_$SLURM_JOBID
+mkdir -p $HOME/lustre/bench/ior/bin_$SLURM_JOB_ID $HOME/lustre/bench/ior/run_$SLURM_JOB_ID
+mkdir -p $HOME/lustre/bench/mdtest/bin_$SLURM_JOB_ID $HOME/lustre/bench/mdtest/run_$SLURM_JOB_ID
 
 # copy executables to lustre 
-cp $HOME/ior/src/ior $HOME/lustre/bench/ior/bin_$SLURM_JOBID/ior
-cp $HOME/ior/src/mdtest $HOME/lustre/bench/mdtest/bin_$SLURM_JOBID/mdtest
+cp $HOME/ior/src/ior $HOME/lustre/bench/ior/bin_$SLURM_JOB_ID/ior
+cp $HOME/ior/src/mdtest $HOME/lustre/bench/mdtest/bin_$SLURM_JOB_ID/mdtest
 
 # run intel mpi test
 mpirun -ppn $SLURM_CPUS_ON_NODE IMB-MPI1 alltoall
 
 # small ior
-mpirun -ppn $SLURM_CPUS_ON_NODE $HOME/lustre/bench/ior/bin_$SLURM_JOBID/ior -w -i 1 -o $HOME/lustre/bench/ior/run_$SLURM_JOBID/out -t 1m -b 16m -s 16 -F -C -e
+mpirun -ppn $SLURM_CPUS_ON_NODE $HOME/lustre/bench/ior/bin_$SLURM_JOB_ID/ior -w -i 1 -o $HOME/lustre/bench/ior/run_$SLURM_JOB_ID/out -t 1m -b 16m -s 16 -F -C -e
 
 # small mdtest 
-mpirun -ppn $SLURM_CPUS_ON_NODE $HOME/lustre/bench/mdtest/bin_$SLURM_JOBID/mdtest -n 20840 -i 1 -u -d $HOME/lustre/bench/mdtest/run_$SLURM_JOBID
+mpirun -ppn $SLURM_CPUS_ON_NODE $HOME/lustre/bench/mdtest/bin_$SLURM_JOB_ID/mdtest -n 20840 -i 1 -u -d $HOME/lustre/bench/mdtest/run_$SLURM_JOB_ID
