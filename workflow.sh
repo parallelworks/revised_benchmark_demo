@@ -73,15 +73,15 @@ echo "setting up env file..."
 echo "git clone -c feature.manyFiles=true https://github.com/spack/spack.git" > ${jobdir}/wfenv.sh 
 echo ". $HOME/spack/share/spack/setup-env.sh" >> ${jobdir}/wfenv.sh 
 echo "spack install intel-oneapi-mpi intel-oneapi-compilers" >> ${jobdir}/wfenv.sh
-echo "source /usr/share/lmod/8.7.32/init/bash" >> ${jobdir}/wfenv.sh 
+lmod=$(ls -1 /usr/share/lmod | grep -E '^[0-9]+\.[0-9]+' | sort -V | tail -n 1)
+echo "source /usr/share/lmod/${lmod_version}/init/bash" >> ${jobdir}/wfenv.sh
 echo "yes | spack module lmod refresh intel-oneapi-mpi intel-oneapi-compilers gcc-runtime glibc" >> ${jobdir}/wfenv.sh
 echo "export MODULEPATH=\$MODULEPATH:$HOME/spack/share/spack/lmod/linux-rocky8-x86_64/Core" >> ${jobdir}/wfenv.sh
 echo "echo \$MODULEPATH" >> ${jobdir}/wfenv.sh
-echo "module load intel-oneapi-compilers" >> ${jobdir}/wfenv.sh
-echo "module load intel-oneapi-mpi" >> ${jobdir}/wfenv.sh
+echo "module load \$(module avail 2>&1 | grep "intel-oneapi-compilers")" >> ${jobdir}/wfenv.sh
+echo "module load \$(module avail 2>&1 | grep "intel-oneapi-mpi")" >> ${jobdir}/wfenv.sh
 
 scp ${jobdir}/wfenv.sh ${WFP_whost}:${HOME}
-scp ${jobdir}/inputs.sh ${WFP_whost}:${HOME}
 
 echo "submitting batch job..."
 jobid=$(${sshcmd} "sbatch -o ${HOME}/slurm_job_%j.out -e /${HOME}/slurm_job_%j.out -N ${commands_nnodes} --ntasks-per-node=${commands_ppn} ${WFP_jobscript};echo Runcmd done2 >> ~/job.exit" | tail -1 | awk -F ' ' '{print $4}')
