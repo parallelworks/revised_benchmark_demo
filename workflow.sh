@@ -94,10 +94,10 @@ echo "${sshcmd} \"scancel ${jobid}\"" > kill.sh
 while true; do    
     # squeue won't give you status of jobs that are not running or waiting to run
     # qstat returns the status of all recent jobs
-    job_status=$($sshcmd squeue | grep ${jobid} | awk '{print $5}')
+    job_status=$($sshcmd squeue | awk -v id="$jobid" '$1 == id {print $5}')
     # If job status is empty job is no longer running
     if [ -z ${job_status} ]; then
-        job_status=$($sshcmd "sacct -j ${jobid}  --format=state" | tail -n1)
+        job_status=$($sshcmd "sacct -j ${jobid} --format=state" | tail -n1)
         echo "JOB STATUS: ${job_status}"
         break
     fi
