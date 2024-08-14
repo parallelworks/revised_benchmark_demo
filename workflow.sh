@@ -106,7 +106,8 @@ while true; do
 done
 
 # copy iperf to cluster
-${jobdir}/run_iperf.sh ${jobdir}/inputs.sh ${WFP_whost}:${HOME}
+${jobdir}/run_iperf.sh ${WFP_whost}:${HOME}
+${jobdir}/inputs.sh ${WFP_whost}:${HOME}
 
 # execute the script
 bash run_iperf.sh > iperf_${jobid}.out
