@@ -85,7 +85,7 @@ echo "module load \$(module avail 2>&1 | grep "intel-oneapi-mpi")" >> ${jobdir}/
 scp ${jobdir}/wfenv.sh ${WFP_whost}:${HOME}
 
 echo "submitting batch job..."
-jobid=$(${sshcmd} "sbatch -o ${HOME}/slurm_job_%j.out -e ${HOME}/slurm_job_%j.out -N ${commands_nnodes} --ntasks-per-node=${commands_ppn} ${WFP_jobscript};echo Runcmd done2 >> ~/job.exit" | tail -1 | awk -F ' ' '{print $4}')
+jobid=$(${sshcmd} "sbatch -o ${HOME}/slurm_job_%j.out -e ${HOME}/slurm_job_%j.out -N ${nnodes} --ntasks-per-node=${ppn} ${WFP_jobscript};echo Runcmd done2 >> ~/job.exit" | tail -1 | awk -F ' ' '{print $4}')
 echo "JOB ID: ${jobid}"
 
 # Prepare kill script
