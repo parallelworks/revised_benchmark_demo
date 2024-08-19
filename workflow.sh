@@ -67,7 +67,7 @@ echod "Check connection to cluster"
 sshcmd="ssh -f ${ssh_options} $WFP_whost"
 ${sshcmd} hostname
 
-WFP_jobscript=${commands_jsource}.sbatch 
+WFP_jobscript=${jsource}.sbatch 
 scp ${jobdir}/slurm-jobs/generic/${WFP_jobscript} ${WFP_whost}:${HOME}
 echo "setting up env file..."
 echo "git clone -c feature.manyFiles=true https://github.com/spack/spack.git" > ${jobdir}/wfenv.sh 
