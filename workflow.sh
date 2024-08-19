@@ -35,7 +35,7 @@ echod() {
     echo $(date): $@
     }
 
-export WFP_whost=${commands_resource_1_publicIp}
+export WFP_whost=${commands_resource_publicIp}
 
 # Testing echod
 echod Testing echod. Currently on `hostname`.
